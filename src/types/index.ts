@@ -1,17 +1,13 @@
-export interface Message {
-  id: number,
-  userName: string,
-  userId: number,
+export interface Word {
+  id: number
   text: string
 }
 
-export interface Room {
-  id: number,
-  url: string,
-  userName: string,
-  messages: Message[]
+export interface Words {
+  words: Word[]
 }
 
-export interface RootState {
-  rooms: Room[],
-}
+export interface State {
+  items: Word[]
+  selected: Word[]
+} 

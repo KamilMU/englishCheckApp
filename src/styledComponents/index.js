@@ -4,6 +4,7 @@ export const Container =  styled.div`
   margin: 0 auto;
   width: 100%;
   max-width: 740px;
+  font-family: 'Roboto', sans-serif;
 
   display: flex;
   flex-direction: column;
@@ -17,11 +18,14 @@ export const Lines =  styled.div`
   margin-bottom: 10px;
 `;
 
-export const Line = styled.div`
-  width: 350px;
+export const DropLine = styled.div`
+  width: 60%;
   height: 20px;
+  border-top: 1px solid black;
   border-bottom: 1px solid black;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  padding: 4px;
+  display: flex;
 `;
 
 export const List = styled.div`
@@ -48,9 +52,9 @@ export const Button = styled.button`
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 
   &:active {
-    -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
-    -moz-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
-    box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+    -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
   }
 `;
 
@@ -64,3 +68,37 @@ export const Image =  styled.img`
 Image.defaultProps = {
   src: myImage,
 };
+
+export const WordsToTranslate = styled.div`
+  width: 37%;
+  height: 40px;
+  font-size: 12px;
+  font-weight: 300;
+  border: 1px solid black;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const WordToTranslate = styled.div`
+  margin-right: 7px;
+`;
+
+export const Main = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+`;
+
+export const Item = styled.div`
+  font-weight: 300;
+  margin-right: 12px;
+`;
+
+export const Text = styled.h1`
+  font-weight: 500;
+`;
+
+export const ResultText = styled.h2`
+  font-weight: 300;
+`;
