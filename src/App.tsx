@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Container, Button, Text, ResultText
+  Container, Button, Tittle, ResultText
 } from './styledComponents';
 import DragDrop from './components/DragDrop';
 import { checkTranslation } from './services';
@@ -8,13 +8,13 @@ import MainContent from './components/MainContent';
 import { Word } from './types';
 
 const russianWords = [
-  { id: 7, text: 'хлеб' },
-  { id: 2, text: 'ест' },
-  { id: 1, text: 'Она' },
-  { id: 6, text: 'едят' },
-  { id: 5, text: 'они' },
-  { id: 3, text: 'яблоко,' },
-  { id: 4, text: 'а' },
+  { id: 7, text: 'хлеб', moved: false },
+  { id: 2, text: 'ест', moved: false },
+  { id: 1, text: 'Она', moved: false },
+  { id: 6, text: 'едят', moved: false },
+  { id: 5, text: 'они', moved: false },
+  { id: 3, text: 'яблоко,', moved: false },
+  { id: 4, text: 'а', moved: false },
 ];
 
 const selectedWords: Word[] = [];
@@ -42,21 +42,6 @@ const App = () => {
   const [translationResult, setTranslationResult] = React.useState('');
   const [translatedRight, setTranslatedRight] = React.useState(false);
 
-  // function handleOnDragEnd(result: any) {
-  //   console.log(result, 'result')
-  //   if (!result.destination) return;
-
-  //   const items = Array.from(russianWords);
-  //   const [reorderedItem] = items.splice(result.source.index, 1);
-  //   items.splice(result.destination.index, 0, reorderedItem);
-
-  //   console.log(result.source.index, 'result.source.index')
-
-  //   updateRussianWords(russianWords.filter((w, index) => result.source.index !== index))
-
-  //   updateSelectedWords([...selectedWords, reorderedItem]);
-  // }
-
   function getList(id: any) {
     return state[id2List[id]]
   }
@@ -66,16 +51,23 @@ const App = () => {
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
 
+    // // move back
+    // const items = [...state.items]
+    // if (result) {
+    //   setTimeout(() => setState({ ...state, items: items }), 1000);
+    // }
+    // // ?
+
     return result;
   };
 
-  const move = (source, destination, droppableSource, droppableDestination) => {
+  const move = (source: any, destination: any, droppableSource: any, droppableDestination: any) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
     const [removed] = sourceClone.splice(droppableSource.index, 1);
 
     destClone.splice(droppableDestination.index, 0, removed);
-
+    // setTimeout(() => destClone.splice(removed.id, 1), [...sourceClone, removed], 1000)
     const r: any = {};
     r[droppableSource.droppableId] = sourceClone;
     r[droppableDestination.droppableId] = destClone;
@@ -84,7 +76,7 @@ const App = () => {
   };
 
   function onDragEnd(result: any) {
-    const { source, destination } = result;
+    const { source, destination, droppableSource } = result;
 
     // dropped outside the list
     if (!destination) {
@@ -98,14 +90,24 @@ const App = () => {
         destination.index
       );
 
-      let s = { items: items, selected: state.selected };
+      let newState = {
+        items: items,
+        selected: state.selected
+      };
 
       if (source.droppableId === 'droppable') {
-        s = { selected: items }
+        newState = { selected: items }
       }
 
-      console.log(s, 'state')
-      setState(s);
+      // if (source.droppableId === 'droppable' && destination.droppableId === 'droppable2') {
+      //   const items = [...state.items]
+      //   setTimeout(() => setState({
+      //     ...state,
+      //     items: items
+      //   }), 1000);
+      // }
+
+      setState(newState);
     } else {
       const result = move(
         getList(source.droppableId),
@@ -122,13 +124,28 @@ const App = () => {
   };
 
 
+  function onDragStart(draggedItem: any) {
+    setState({
+      ...state,
+      items: state.items?.map((item) => {
+        if (item.id.toString() === draggedItem.draggableId) {
+          return {
+            ...item,
+            moved: true
+          }
+        }
+
+        return item
+      })
+    })
+  }
 
   return (
     <Container>
-      <Text>Translate this sentence</Text>
+      <Tittle>Translate this sentence</Tittle>
       <MainContent englishWords={englishWords} />
-      <DragDrop state={state} handleOnDragEnd={onDragEnd} />
-      
+      <DragDrop state={state} handleOnDragEnd={onDragEnd} onDragStart={onDragStart} />
+
       <ResultText style={{
         color: translatedRight ? 'green' : 'red'
       }}>

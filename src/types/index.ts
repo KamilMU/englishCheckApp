@@ -1,6 +1,7 @@
 export interface Word {
   id: number
-  text: string
+  text: string,
+  moved?: boolean
 }
 
 export interface Words {

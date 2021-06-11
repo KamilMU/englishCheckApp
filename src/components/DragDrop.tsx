@@ -1,5 +1,5 @@
 import React from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, DragStart, Droppable, ResponderProvided } from 'react-beautiful-dnd';
 import { Item, DropLine, List } from '../styledComponents';
 import DropLines from './DropLines';
 import { State, Word } from '../types';
@@ -8,17 +8,16 @@ import DraggableWord from './DraggableWord';
 interface Props {
   state: State
   handleOnDragEnd: (result: any) => void
+  onDragStart: (initial: DragStart, provided?: ResponderProvided) => void
 }
 
-export const DragDrop: React.FC<Props> = ({ state, handleOnDragEnd }) => {
+export const DragDrop: React.FC<Props> = ({ state, handleOnDragEnd, onDragStart }) => {
   return (
-    <DragDropContext onDragEnd={handleOnDragEnd}>
+    <DragDropContext onDragStart={(e) => onDragStart(e)} onDragEnd={handleOnDragEnd}>
       <Droppable droppableId="droppable" direction="horizontal">
         {(provided: any, snapshot) => (
           <>
-            <DropLine
-              isdraggingover={snapshot.isDraggingOver.toString()}
-              {...provided.droppableProps}
+            <DropLine {...provided.droppableProps}
               ref={provided.innerRef}>
               {state?.selected?.map((selectedWord, index: number) => (
                 <DraggableWord
@@ -42,12 +41,22 @@ export const DragDrop: React.FC<Props> = ({ state, handleOnDragEnd }) => {
               {...provided.droppableProps}
               ref={provided.innerRef}>
               {state?.items?.map((word, index: number) => (
-                <DraggableWord
-                  word={word}
-                  index={index}
-                  key={word.id}
-                  id={word.id}
-                />
+                <>
+                  {word.moved && (
+                    <div style={{
+                      width: "40px",
+                      height: "20px",
+                      borderRadius: '4px',
+                      boxShadow: '0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset'
+                    }}
+                    />)}
+                  <DraggableWord
+                    word={word}
+                    index={index}
+                    key={word.id}
+                    id={word.id}
+                  />
+                </>
               ))}
 
               {provided.placeholder}

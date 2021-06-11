@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export const Container =  styled.div`
+export const Container = styled.div`
   margin: 0 auto;
   width: 100%;
-  max-width: 740px;
+  max-width: 540px;
   font-family: 'Roboto', sans-serif;
 
   display: flex;
@@ -14,7 +14,7 @@ export const Container =  styled.div`
   text-align: center;
 `;
 
-export const Lines =  styled.div`
+export const Lines = styled.div`
   margin-bottom: 10px;
 `;
 
@@ -24,8 +24,26 @@ export const DropLine = styled.div`
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   margin-bottom: 10px;
-  padding: 4px;
+  padding: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  word-break: break-all;
+  line-height: 1.6;
+  margin-bottom: 50px;
+
+  &:after {
+    content: '';
+    height: .7px;
+    position: absolute;
+    background: black;
+    width: 100%;
+    top: 73px;
+    left: 0;
+  }
 `;
 
 export const List = styled.div`
@@ -36,7 +54,6 @@ export const List = styled.div`
   padding: 0;
   width: 60%;
   justify-content: space-between;
-  margin-bottom: 20px;
 `;
 
 export const Button = styled.button`
@@ -60,7 +77,7 @@ export const Button = styled.button`
 
 const myImage = 'http://simpleicon.com/wp-content/uploads/user1.png';
 
-export const Image =  styled.img`
+export const Image = styled.img`
   max-width: 30%;
   src: http://simpleicon.com/wp-content/uploads/user1.png;
 `;
@@ -75,6 +92,7 @@ export const WordsToTranslate = styled.div`
   font-size: 12px;
   font-weight: 300;
   border: 1px solid black;
+  border-radius: 10px;
   padding: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -92,11 +110,16 @@ export const Main = styled.div`
 
 export const Item = styled.div`
   font-weight: 300;
-  margin-right: 12px;
+  font-size: 12px;
+  margin-right: 6px;
+  margin-bottom: 4px;
+  background-color: #F0F0F0;
+  padding: 3px 8px;
+  border-radius: 3px;
 `;
 
-export const Text = styled.h1`
-  font-weight: 500;
+export const Tittle = styled.h1`
+  font-weight: 300;
 `;
 
 export const ResultText = styled.h2`
