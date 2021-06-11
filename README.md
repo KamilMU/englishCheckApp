@@ -1,0 +1,3 @@
+# englishCheckApp
+
+npm start
